@@ -6,68 +6,70 @@ Live job postings, taken straight from employers' own career pages and delivered
 
 Pull a feed from any of the big job boards and you will spend more time cleaning it than using it.
 
-The same role appears three times: once from the employer, once from an agency, once from a recruiter who is not actually hiring and just wants your CV on file. Postings sit there long after the job is filled. Apply links bounce through redirects and land on a dead page. You cannot tell which listings are real.
+The same role turns up three times: once from the employer, once from an agency, once from a recruiter who is not hiring at all and just wants your CV on file. Filled jobs sit there for months. Apply links bounce through redirects and land on a dead page.
 
-None of that is a scraping problem. It is what job boards are: a place where anyone can post anything, including people who are not hiring.
+None of that is a scraping problem. It is what job boards are, and no amount of better scraping fixes it. A place where anyone can post anything will contain a lot of anything.
 
 ## A different source
 
-Almost no company builds its own careers page. They use recruitment software, and roughly ten of those systems cover most of the market. Greenhouse, Workday, Ashby, Lever, Personio and a handful of others.
+Almost no company builds its own careers page. They use recruitment software, and about ten of those systems cover most of the market: Greenhouse, Workday, Ashby, Lever, Personio and a handful of others.
 
-Those systems publish their openings in a machine-readable format, because that is how the careers page on the company's website gets filled in. This reads that same feed.
+Those systems publish their openings in a machine-readable format, because that is how the careers page on the company's own website gets filled in. This reads that same feed. Nothing is bypassed and nothing is guessed at.
 
-The result is a list of jobs that exist, at companies that are hiring, with links that go to the employer's actual application form.
+What comes back is a list of jobs that exist, at companies that are hiring, with links that go to the employer's actual application form.
 
 ## What you get
 
-**One posting per role.** No agency copies, no recruiter reposts, no duplicates to deduplicate.
+One posting per role, from the company doing the hiring. No agency copies, no recruiter reposts, nothing to deduplicate.
 
-**Apply links that work.** Straight to the employer's own form.
+Ten recruitment systems, one set of fields. Each platform returns a different shape; you never see that.
 
-**Closed jobs, flagged.** Every run reads a company's complete list of openings, so anything that disappeared since last time is reported separately. Most job feeds cannot do this, because they only ever see what gets added. If you run a job board, this is the difference between a site that looks current and one that looks abandoned.
+The awkward parts arrive already sorted. Locations come in as free text like "Remote, Italy", "München" or "NY HQ" and come back as a city, a region and a country you can filter on. Salary is pulled out where the employer published one. So is remote or hybrid or on-site, how many days a week in the office, roughly what seniority is wanted, and which language the advert is written in.
 
-**Ten systems, one format.** Each platform returns a different shape. You get a single consistent set of fields regardless of source.
+**Closed jobs get flagged, and this is the part most people underestimate.** Every run reads a company's complete list of openings, so anything that vanished since last time is reported separately. Most job feeds cannot do this at all, because they only ever see what gets added. If you run a job board, it is the difference between a site that looks current and one that looks abandoned.
 
-**The messy parts already sorted.** Locations arrive as free text like "Remote, Italy", "München" or "NY HQ" and come back as a clean city, region and country you can filter on. Salary is extracted where the employer published it. So is whether the role is remote, hybrid or on-site, how many days a week in the office, what seniority is wanted, and what language the advert is written in.
+There is an optional AI layer for skills and a short summary of responsibilities. It is off unless you switch it on and supply your own key, because most people do not need it and it costs money.
 
-**Optional AI summaries.** Switch it on with your own key and each job also gets the specific skills required and a short summary of responsibilities. Off by default, because most people do not need it and it costs money.
+## Who buys this
 
-## Who it is for
+Job boards, mostly, and for the obvious reason: their whole product is whether the listings are real.
 
-Job boards that need real listings rather than aggregator noise. Recruitment tools that want to know who is hiring right now. Sales and lead generation teams who treat a new job posting as a buying signal, because a company hiring five engineers is a company with budget. Researchers and analysts tracking hiring across a market.
+Recruitment tools use it to see who is hiring this week rather than last quarter. Researchers track hiring across a market.
+
+The one that surprises people is sales. A company posting five engineering roles has budget, a roadmap and a problem it is trying to solve, and it has told you all three in public. Job postings are one of the cleanest buying signals there is, and almost nobody treats them that way.
 
 ## What it costs to run
 
-Very little per job, by design.
+Very little per job, and that is a design decision rather than a happy accident.
 
-Most of what you get is read directly from the recruitment system's own data or worked out with plain pattern matching. No AI, so no per-job cost. That covers salary, location, seniority, remote status, employment type and language.
+Almost everything you get is read straight out of the recruitment system's own data or worked out with plain pattern matching. No AI involved, so no per-job cost. That covers salary, location, seniority, remote status, employment type and language.
 
-When a company has posted nothing new since the last check, the tool notices and skips downloading their page. On an hourly schedule that avoids most of the work. Job descriptions are only fetched for postings that survive your filters, so narrow searches stay cheap even against large employers.
+The rest is avoiding pointless work. If a company has posted nothing since the last check, the tool notices and does not download their page at all, which on an hourly schedule skips most of the work. Job descriptions are only fetched for postings that survive your filters, so a narrow search stays cheap even against an employer with seven hundred openings.
 
-The AI layer is off unless you turn it on, only reads jobs that are genuinely new, and remembers what it has already read so it never pays twice for the same advert.
+The AI layer, when on, only reads genuinely new jobs and remembers what it has already read. It never pays twice for the same advert.
 
-## Proven, not estimated
+## The numbers
 
-Every number here comes from actual runs on 18 August 2026, not projections.
+All measured on 18 August 2026, from real runs.
 
-Ten platforms, each verified against a live company board. A nine-company run collects 906 jobs in 45 seconds. 179 company career pages ship ready to use, all checked and working, holding 18,830 jobs between them. 78 automated tests run against real captured data.
+Ten platforms, each checked against a live company board. A nine-company run collects 906 jobs in 45 seconds. 179 career pages ship ready to use, holding 18,830 jobs between them. 78 automated tests run against captured real-world data.
 
-Across 907 real postings: employment type resolved on 60%, work arrangement on 99%, country on 97%, language on 94%, seniority on 82%, salary on 21%.
+Across 907 postings: work arrangement resolved on 99%, country 97%, language 94%, seniority 82%, employment type 60%, salary 21%.
 
-That salary figure is not a failure to extract. It is how many employers publish a number at all.
+That last figure looks weak until you think about it. It is not a failure to extract salary. It is how many employers publish one.
 
 ## Where the limits are
 
-It reads ten recruitment systems, not every system in existence. Some others need a paid API key or publish nothing readable.
+Ten recruitment systems is not every recruitment system. Some of the others want a paid API key, and a few publish nothing readable at all.
 
-It ships knowing 179 company career pages. Adding a company is one line of configuration, and the list grows as you point it at the employers you care about.
+It ships knowing 179 career pages. That list grows as you point it at the employers you care about, and adding one is a single line of configuration.
 
-It can place a job on a map about half the time. The rest get a city and country but no coordinates, because the built-in location list covers major hiring centres rather than every town.
+It can put a job on a map about half the time. The rest get a city and country but no coordinates, because the built-in location table covers major hiring centres rather than every town.
 
-It has no history. It knows what is on a careers page now, and what was there last time it looked.
+And it has no memory of the past. It knows what is on a careers page now and what was there last time it looked, which is enough for a live feed and no use at all for historical analysis.
 
 ## Getting started
 
-Point it at a company and it works. Give it a careers page URL and it identifies the recruitment system automatically, so you do not need to know or care which one a company uses.
+Point it at a company. Give it a careers page URL and it works out which recruitment system that company uses, so you never have to know or care.
 
-Run it on a schedule and it delivers only what changed since last time.
+Put it on a schedule and it sends you only what changed.

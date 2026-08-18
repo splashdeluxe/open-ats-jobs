@@ -1,4 +1,4 @@
-# Open ATS Jobs
+# ATS Job Scraper
 
 Reads job adverts straight from company career pages and returns them as one consistent set of fields, whichever recruitment system the company happens to use.
 
@@ -10,19 +10,13 @@ Runs as an [Apify](https://apify.com) Actor, or as a plain Node script.
 
 ## What makes the data different
 
-Job aggregators carry the same role three times: once from the employer, once from an agency, once from a recruiter who is not actually hiring. Half the links are dead by the time you read them.
+Job aggregators carry the same role three times: once from the employer, once from an agency, once from a recruiter who is not hiring at all. Half the links are dead by the time you read them. That is not a scraping problem, it is what a site where anyone can post anything looks like.
 
-This never touches an aggregator. Every posting comes from the employer's own careers page, which means:
+This never touches an aggregator. Every posting comes from the employer's own careers page, so there is one row per role and the apply URL points at the company's actual application form rather than a redirect chain.
 
-**No duplicates and no reposts.** One posting per role, from the company that is actually hiring.
+Greenhouse, Workday, Ashby, Lever, Workable, Personio, Recruitee, Breezy, Rippling and SmartRecruiters all return different shapes. You get one. Locations arrive as free text ("Remote, Italy", "München", "NY HQ") and come back as structured city, region and country; pay is extracted wherever the employer published it.
 
-**Apply links that work.** The URL points at the employer's own application form, not a redirect chain.
-
-**You see when a job closes.** Every run reads a company's complete board, so anything that disappeared since last time is written to a separate `expired-jobs` dataset. Most job feeds cannot tell you this at all, because they only ever see additions.
-
-**One schema across ten platforms.** Greenhouse, Workday, Ashby, Lever, Workable, Personio, Recruitee, Breezy, Rippling and SmartRecruiters all return different shapes. You get one.
-
-**Salary, location and seniority already parsed.** "Remote, Italy" and "München" and "NY HQ" come back as structured city, region and country. Pay is extracted where the employer published it.
+The part worth calling out is expiry. Every run reads a company's complete board, so anything that disappeared since last time is written to a separate `expired-jobs` dataset. Most job feeds cannot tell you this, because they only ever see additions.
 
 ## Platform coverage
 
