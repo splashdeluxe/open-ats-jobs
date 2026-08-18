@@ -1,0 +1,10 @@
+node_modules
+dist
+storage
+apify_storage
+crawlee_storage
+test
+fixtures
+.git
+.github
+*.md
