@@ -8,15 +8,21 @@ If you are not a developer, read [ONE-PAGER.md](ONE-PAGER.md) instead. It covers
 
 Runs as an [Apify](https://apify.com) Actor, or as a plain Node script.
 
-## Why not just buy the data
+## What makes the data different
 
-You can, and for some uses you should. Services like Fantastic.jobs sell an indexed database of 175,000 career sites at $4 to $12 per thousand jobs, and if you need total market coverage tomorrow that is the right purchase.
+Job aggregators carry the same role three times: once from the employer, once from an agency, once from a recruiter who is not actually hiring. Half the links are dead by the time you read them.
 
-This is for the other case: a feed you control, over employers you choose, with no per-job fee and nobody between you and the source. Two things fall out of that which are awkward to buy.
+This never touches an aggregator. Every posting comes from the employer's own careers page, which means:
 
-Expired jobs come free. Every run reads a company's complete board, so anything that disappeared since last time is a set difference. The commercial equivalent sells that as a separate $20/month product, because their pipeline is incremental and cannot see absence.
+**No duplicates and no reposts.** One posting per role, from the company that is actually hiring.
 
-And the output field names deliberately match theirs, so an existing consumer can repoint at this without rewriting a pipeline.
+**Apply links that work.** The URL points at the employer's own application form, not a redirect chain.
+
+**You see when a job closes.** Every run reads a company's complete board, so anything that disappeared since last time is written to a separate `expired-jobs` dataset. Most job feeds cannot tell you this at all, because they only ever see additions.
+
+**One schema across ten platforms.** Greenhouse, Workday, Ashby, Lever, Workable, Personio, Recruitee, Breezy, Rippling and SmartRecruiters all return different shapes. You get one.
+
+**Salary, location and seniority already parsed.** "Remote, Italy" and "München" and "NY HQ" come back as structured city, region and country. Pay is extracted where the employer published it.
 
 ## Platform coverage
 
@@ -35,7 +41,7 @@ Verified against live boards on 2026-08-18. Every connector below was confirmed 
 | Workday | POST `{tenant}.{pod}.myworkdayjobs.com/wday/cxs/...` | `nvidia` (2000) | second request |
 | SmartRecruiters | `api.smartrecruiters.com/v1/companies/{slug}/postings` | `Visa` (2) | **disabled by default**, see Compliance |
 
-Ten platforms, nine of them on by default. That is fewer than the commercial services cover, and the gap is real: several remaining systems (Teamtailor, Freshteam, Zoho, Comeet) require a paid API key, and others publish no readable feed at all. Adding one that does is a single file plus one line in `src/connectors/index.ts`.
+Ten platforms, nine of them on by default. Scope is deliberate rather than exhaustive: several other systems (Teamtailor, Freshteam, Zoho, Comeet) require a paid API key, and some publish no readable feed at all. Adding one that does is a single file plus one line in `src/connectors/index.ts`.
 
 `seeds/companies.json` ships 179 company boards that were verified working on the same date, holding 18,830 jobs between them. Set `useSeedList: true` to crawl them.
 
@@ -73,7 +79,7 @@ You can pass careers URLs instead of knowing the platform:
 
 ## Output
 
-Field names match fantastic-jobs, so a pipeline built against that Actor works here unchanged.
+Field names follow the convention common to job-data APIs, so an existing ingestion pipeline generally works unchanged.
 
 ```
 id, title, organization, url, apply_url

@@ -64,8 +64,9 @@ export const derivedLocationSchema = z.object({
 export type DerivedLocation = z.infer<typeof derivedLocationSchema>;
 
 /**
- * Output contract. Field names intentionally mirror fantastic-jobs so an existing
- * consumer can repoint at this Actor without rewriting their pipeline.
+ * Output contract. Field names follow the naming convention common to existing
+ * job-data APIs, so a consumer already ingesting job feeds can point at this
+ * Actor without rewriting their pipeline.
  */
 export const normalizedJobSchema = z.object({
   id: z.string(),

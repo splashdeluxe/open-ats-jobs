@@ -23,6 +23,14 @@ const stripHtml = (html?: string | null): string =>
 
 export { stripHtml };
 
+/**
+ * Interpret a value the ATS supplied in a dedicated employment-type field.
+ *
+ * Separators are stripped and matching is by substring, which is safe here
+ * because the whole value is the employment type: "full_time", "FullTime" and
+ * "Full-time" all mean the same thing. An unrecognised value returns OTHER,
+ * because the platform did state something we simply could not map.
+ */
 export function normalizeEmploymentType(raw?: string | null): EmploymentType | null {
   if (!raw) return null;
   const s = raw.toLowerCase().replace(/[_\s-]/g, '');
@@ -34,6 +42,70 @@ export function normalizeEmploymentType(raw?: string | null): EmploymentType | n
   if (/(volunteer|ehrenamt)/.test(s)) return 'VOLUNTEER';
   if (/(perdiem|casual)/.test(s)) return 'PER_DIEM';
   return 'OTHER';
+}
+
+/**
+ * Free-text markers, anchored on word boundaries.
+ *
+ * The boundaries are the whole point. Substring matching on prose classifies
+ * "Internal Auditor" as an internship and "Contract Manager" as a contractor,
+ * both of which were happening before this existed. Ordered most specific
+ * first so "working student" wins over a bare "student".
+ */
+const FREE_TEXT_MARKERS: Array<[EmploymentType, RegExp]> = [
+  ['INTERN', /\b(internships?|working student|werkstudent|praktikum|praktikant\w*|apprenticeships?|apprentice|trainee\s+programme?|interns?)\b/i],
+  ['PART_TIME', /\b(part[-\s]?time|teilzeit)\b/i],
+  ['FULL_TIME', /\b(full[-\s]?time|vollzeit|unbefristet|permanent\s+(?:position|role|contract|employment|hire))\b/i],
+  ['CONTRACTOR', /\b(independent contractor|contractors?|freelance\w*|contract\s+(?:role|position|basis|assignment)|b2b\s+contract)\b/i],
+  ['TEMPORARY', /\b(temporary\s+(?:position|role|contract|assignment)|fixed[-\s]term|befristet|seasonal\s+(?:position|role|work))\b/i],
+  ['VOLUNTEER', /\b(volunteer\w*|ehrenamt\w*)\b/i],
+  ['PER_DIEM', /\b(per[-\s]diem|casual\s+(?:worker|position|role))\b/i],
+];
+
+/** Whichever marker appears earliest wins, so a heading beats benefits boilerplate. */
+function fromFreeText(text: string): EmploymentType | null {
+  if (!text) return null;
+  let best: { type: EmploymentType; at: number } | null = null;
+  for (const [type, re] of FREE_TEXT_MARKERS) {
+    const m = re.exec(text);
+    if (m && (best === null || m.index < best.at)) best = { type, at: m.index };
+  }
+  return best?.type ?? null;
+}
+
+/** "Employment type: Full-time" and its variants, which are far stronger than a bare mention. */
+function fromLabelledField(text: string): EmploymentType | null {
+  const m = /\b(?:employment|job|position|contract|work|role)\s*type\s*[:\-–—]\s*([^\n<.;|]{2,40})/i.exec(text);
+  return m?.[1] ? normalizeEmploymentType(m[1].trim()) : null;
+}
+
+/** Many boards embed a schema.org JobPosting block carrying an exact value. */
+function fromSchemaOrg(html: string | null | undefined): EmploymentType | null {
+  if (!html) return null;
+  const m = /"employmentType"\s*:\s*(?:"([^"]+)"|\[\s*"([^"]+)")/i.exec(html);
+  const value = m?.[1] ?? m?.[2];
+  return value ? normalizeEmploymentType(value) : null;
+}
+
+/**
+ * Work out employment type from the strongest available signal.
+ *
+ * Falls through to null rather than OTHER. OTHER means "the platform told us
+ * something we could not map"; when nothing said anything, null is the honest
+ * answer and lets a consumer filter on it.
+ */
+export function deriveEmploymentType(
+  employmentTypeRaw: string | null | undefined,
+  title: string,
+  descriptionHtml: string | null | undefined,
+  text: string,
+): EmploymentType | null {
+  return normalizeEmploymentType(employmentTypeRaw)
+    ?? fromSchemaOrg(descriptionHtml)
+    ?? fromLabelledField(text)
+    ?? fromFreeText(title)
+    ?? fromFreeText(text.slice(0, 20_000))
+    ?? null;
 }
 
 export interface ArrangementResult {
@@ -256,7 +328,7 @@ export function deriveAll(job: RawJob): DerivedFields {
     ai_salary_min_value: salary.min,
     ai_salary_max_value: salary.max,
     ai_salary_unit_text: salary.unitText,
-    ai_employment_type: normalizeEmploymentType(job.employmentTypeRaw) ?? normalizeEmploymentType(job.title),
+    ai_employment_type: deriveEmploymentType(job.employmentTypeRaw, job.title, job.descriptionHtml, text),
     ai_work_arrangement: arrangement.arrangement,
     ai_work_arrangement_office_days: arrangement.officeDays,
     ai_experience_level: deriveExperienceLevel(job.title, text),

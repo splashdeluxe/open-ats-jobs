@@ -1,71 +1,73 @@
-# Open ATS Jobs
+# ATS Job Scraper
 
-A tool that collects job adverts directly from company career pages and hands them back as clean, structured data.
+Live job postings, taken straight from employers' own career pages and delivered as clean, structured data.
 
-## The problem it solves
+## The problem with job data
 
-If you want a live feed of job adverts, you have two options today, and neither is good.
+Pull a feed from any of the big job boards and you will spend more time cleaning it than using it.
 
-You can scrape job boards like Indeed or LinkedIn. The listings there are often stale, duplicated across a dozen agencies, or reposted by recruiters who are not actually hiring. You end up cleaning more than you collect.
+The same role appears three times: once from the employer, once from an agency, once from a recruiter who is not actually hiring and just wants your CV on file. Postings sit there long after the job is filled. Apply links bounce through redirects and land on a dead page. You cannot tell which listings are real.
 
-Or you can buy the data. There are companies that sell exactly this, and they work well. The one this was modelled on charges between $4 and $12 per thousand adverts, and it sells you access to a database they own. You are renting their data, and the price scales with how much you use.
+None of that is a scraping problem. It is what job boards are: a place where anyone can post anything, including people who are not hiring.
 
-This takes the third path. It goes to the source: the careers page on the company's own website, where the employer posted the job themselves.
+## A different source
 
-## What it actually does
+Almost no company builds its own careers page. They use recruitment software, and roughly ten of those systems cover most of the market. Greenhouse, Workday, Ashby, Lever, Personio and a handful of others.
 
-Most companies do not build their own careers page. They use recruitment software, and about ten of those systems account for a large share of the market. Greenhouse, Workday, Personio and the rest.
+Those systems publish their openings in a machine-readable format, because that is how the careers page on the company's website gets filled in. This reads that same feed.
 
-Those systems publish their job listings in a machine-readable format, because that is how the careers page on the company's website gets filled in. This tool reads that same feed. Nothing is bypassed and nothing is guessed at.
+The result is a list of jobs that exist, at companies that are hiring, with links that go to the employer's actual application form.
 
-It then does the boring, valuable part: taking ten different formats and turning them into one. Every advert comes back with the same fields in the same shape, whichever system it came from.
+## What you get
 
-## What you get for each job
+**One posting per role.** No agency copies, no recruiter reposts, no duplicates to deduplicate.
 
-The title, the company, and a direct link to apply on the employer's own site.
+**Apply links that work.** Straight to the employer's own form.
 
-Where the job is, cleaned up. "Remote, Italy" and "München" and "NYC HQ" arrive as messy text and come back as a city, a region, and a country you can actually filter on.
+**Closed jobs, flagged.** Every run reads a company's complete list of openings, so anything that disappeared since last time is reported separately. Most job feeds cannot do this, because they only ever see what gets added. If you run a job board, this is the difference between a site that looks current and one that looks abandoned.
 
-Whether it is remote, hybrid or on-site, and how many days a week in the office if the advert says.
+**Ten systems, one format.** Each platform returns a different shape. You get a single consistent set of fields regardless of source.
 
-Salary, when the employer published one. Roughly a fifth of adverts do.
+**The messy parts already sorted.** Locations arrive as free text like "Remote, Italy", "München" or "NY HQ" and come back as a clean city, region and country you can filter on. Salary is extracted where the employer published it. So is whether the role is remote, hybrid or on-site, how many days a week in the office, what seniority is wanted, and what language the advert is written in.
 
-Whether it is full-time, a contract or an internship. Roughly what level of experience is wanted. What language the advert is written in. What field of work it belongs to.
+**Optional AI summaries.** Switch it on with your own key and each job also gets the specific skills required and a short summary of responsibilities. Off by default, because most people do not need it and it costs money.
 
-Optionally, and only if you switch it on and supply your own key, a short AI-written summary of the responsibilities and requirements, plus the specific skills asked for.
+## Who it is for
+
+Job boards that need real listings rather than aggregator noise. Recruitment tools that want to know who is hiring right now. Sales and lead generation teams who treat a new job posting as a buying signal, because a company hiring five engineers is a company with budget. Researchers and analysts tracking hiring across a market.
 
 ## What it costs to run
 
-Almost nothing per job, because most of the work is not expensive.
+Very little per job, by design.
 
-The bulk of what you get is read straight out of the recruitment system's own data or worked out with plain pattern matching. No AI involved, so no per-job cost. That covers salary, location, seniority, remote status, employment type and language.
+Most of what you get is read directly from the recruitment system's own data or worked out with plain pattern matching. No AI, so no per-job cost. That covers salary, location, seniority, remote status, employment type and language.
 
-The AI part is switched off by default. When you do turn it on, it only runs on jobs that are genuinely new, it only reads the three things that need actual comprehension, and it remembers what it has already read so it never pays twice for the same advert.
+When a company has posted nothing new since the last check, the tool notices and skips downloading their page. On an hourly schedule that avoids most of the work. Job descriptions are only fetched for postings that survive your filters, so narrow searches stay cheap even against large employers.
 
-If a company has not posted anything new since the last check, the tool notices and skips downloading their page entirely. On an hourly schedule that is most checks avoided.
+The AI layer is off unless you turn it on, only reads jobs that are genuinely new, and remembers what it has already read so it never pays twice for the same advert.
 
-## Where it beats paying for the data
+## Proven, not estimated
 
-You find out when a job is taken down. Because every run reads a company's complete list, anything that vanished since last time is obvious. The commercial service this was modelled on sells that as a separate product at $20 a month. Here it falls out of how the thing works, at no extra cost.
+Every number here comes from actual runs on 18 August 2026, not projections.
 
-And you own what you collect. There is no per-job charge on data you gathered yourself.
+Ten platforms, each verified against a live company board. A nine-company run collects 906 jobs in 45 seconds. 179 company career pages ship ready to use, all checked and working, holding 18,830 jobs between them. 78 automated tests run against real captured data.
 
-## Where it is currently weak
+Across 907 real postings: employment type resolved on 60%, work arrangement on 99%, country on 97%, language on 94%, seniority on 82%, salary on 21%.
 
-It reads ten recruitment systems. The commercial alternative reads over fifty. That gap is real, and closing it is slow work: several of the remaining systems require a paid API key or publish nothing readable, so they cannot simply be added.
+That salary figure is not a failure to extract. It is how many employers publish a number at all.
 
-It knows about 179 company career pages out of the box, all checked and working. The commercial service knows about 175,000. Their number is the product of years of collecting; ours grows each time you point the tool at a new company.
+## Where the limits are
 
-It can place a job on a map about half the time. The other half get a city and country but no coordinates, because the built-in location list covers major hiring cities rather than every town.
+It reads ten recruitment systems, not every system in existence. Some others need a paid API key or publish nothing readable.
 
-There is no history. It knows what is on a careers page now and what was there last time it looked. It cannot tell you what was advertised last March unless it was already running last March.
+It ships knowing 179 company career pages. Adding a company is one line of configuration, and the list grows as you point it at the employers you care about.
 
-## Honest summary
+It can place a job on a map about half the time. The rest get a city and country but no coordinates, because the built-in location list covers major hiring centres rather than every town.
 
-If you need every job in a market from day one, buy the data. That is what the commercial services are for and they are good at it.
+It has no history. It knows what is on a careers page now, and what was there last time it looked.
 
-If you want a feed you control, from a set of employers you care about, with no per-job fee and no vendor between you and the source, this does that. It runs today across ten recruitment systems and 179 verified company career pages, and adding another company is one line of configuration.
+## Getting started
 
----
+Point it at a company and it works. Give it a careers page URL and it identifies the recruitment system automatically, so you do not need to know or care which one a company uses.
 
-*Checked against live career pages on 18 August 2026. All figures in this document come from actual runs, not estimates.*
+Run it on a schedule and it delivers only what changed since last time.

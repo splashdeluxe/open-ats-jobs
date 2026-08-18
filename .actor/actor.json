@@ -1,8 +1,8 @@
 {
   "actorSpecification": 1,
   "name": "open-ats-jobs",
-  "title": "Career Site Job Scraper",
-  "description": "Scrapes job listings straight from company career sites across many ATS platforms, normalised into one schema. Detects expired jobs for free.",
+  "title": "ATS Job Scraper - Direct from Career Sites",
+  "description": "Fresh job postings pulled straight from employers' own career sites across 10 ATS platforms including Greenhouse, Workday, Ashby, Lever and Personio. No aggregator duplicates, no recruiter reposts, no dead apply links. One normalised schema with parsed salary, location, seniority and work arrangement. Expired jobs detected at no extra cost.",
   "version": "0.1",
   "buildTag": "latest",
   "dockerfile": "../Dockerfile",

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { CONNECTOR_BY_ID } from '../src/connectors/index.js';
-import { deriveAll, deriveTaxonomies } from '../src/normalize/derive.js';
+import { deriveAll, deriveTaxonomies, deriveEmploymentType } from '../src/normalize/derive.js';
 import { parseLocationString } from '../src/normalize/location.js';
 import { parseMoney, extractSalary } from '../src/normalize/salary.js';
 import { parseRelativeDate } from '../src/normalize/dates.js';
@@ -174,5 +174,53 @@ describe('location whitespace', () => {
   it('collapses whitespace left by stripped remote markers', () => {
     const r = parseLocationString('Remote - NY  HQ');
     expect(r.loc.city).not.toMatch(/\s{2,}/);
+  });
+});
+
+describe('employment type', () => {
+  const d = (raw: string | null, title: string, text = '', html: string | null = null) =>
+    deriveEmploymentType(raw, title, html, text);
+
+  it('trusts an explicit ATS field above everything else', () => {
+    expect(d('Full-time', 'Contract Manager')).toBe('FULL_TIME');
+    expect(d('part_time', 'Engineer')).toBe('PART_TIME');
+  });
+
+  it('still returns OTHER when the ATS states something unmappable', () => {
+    // The platform did say something; we just could not map it.
+    expect(d('Flexi-gig', 'Engineer')).toBe('OTHER');
+  });
+
+  it('no longer reads "Internal" as an internship', () => {
+    expect(d(null, 'Internal Auditor')).toBeNull();
+    expect(d(null, 'Senior Director, Internal Audit')).toBeNull();
+    expect(d(null, 'Group Product Manager, International')).toBeNull();
+  });
+
+  it('no longer reads "Contract Manager" as a contractor role', () => {
+    expect(d(null, 'Contract Manager')).toBeNull();
+  });
+
+  it('still catches genuine markers in a title', () => {
+    expect(d(null, 'Software Engineering Intern')).toBe('INTERN');
+    expect(d(null, 'Werkstudent Marketing (m/w/d)')).toBe('INTERN');
+    expect(d(null, 'Data Analyst (Part-time)')).toBe('PART_TIME');
+  });
+
+  it('reads a labelled field in the description', () => {
+    expect(d(null, 'Account Executive', 'Employment type: Full-time\nLocation: Remote')).toBe('FULL_TIME');
+  });
+
+  it('reads schema.org JobPosting when a board embeds it', () => {
+    expect(d(null, 'Account Executive', '', '<script>{"employmentType":"PART_TIME"}</script>')).toBe('PART_TIME');
+  });
+
+  it('falls back to prose markers, earliest winning', () => {
+    expect(d(null, 'Account Executive', 'This is a full-time position based in Milan.')).toBe('FULL_TIME');
+    expect(d(null, 'Designer', 'We are hiring on a contract basis for six months.')).toBe('CONTRACTOR');
+  });
+
+  it('returns null rather than OTHER when nothing states a type', () => {
+    expect(d(null, 'Account Executive - Italy', 'We sell software to enterprises.')).toBeNull();
   });
 });
