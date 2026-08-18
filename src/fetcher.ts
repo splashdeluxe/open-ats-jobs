@@ -3,7 +3,7 @@ import { ProxyAgent, type Dispatcher } from 'undici';
 import type { FetchSpec } from './connectors/types.js';
 
 const USER_AGENT =
-  'open-ats-jobs/0.1 (+https://github.com/nils4sparkloomai/open-ats-jobs; job board indexer)';
+  'open-ats-jobs/0.1 (+https://github.com/splashdeluxe/open-ats-jobs; job board indexer)';
 
 export interface FetchResult {
   status: number;
