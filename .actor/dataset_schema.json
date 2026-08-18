@@ -1,33 +1,70 @@
 {
   "actorSpecification": 1,
+  "fields": {},
   "views": {
     "overview": {
       "title": "Jobs",
       "transformation": {
         "fields": [
-          "title", "organization", "url", "date_posted",
-          "cities_derived", "countries_derived", "ai_work_arrangement",
-          "ai_employment_type", "ai_experience_level",
-          "ai_salary_min_value", "ai_salary_max_value", "ai_salary_currency",
+          "title",
+          "organization",
+          "url",
+          "date_posted",
+          "cities_derived",
+          "countries_derived",
+          "ai_work_arrangement",
+          "ai_employment_type",
+          "ai_experience_level",
+          "ai_salary_min_value",
+          "ai_salary_max_value",
+          "ai_salary_currency",
           "source"
         ]
       },
       "display": {
         "component": "table",
         "properties": {
-          "title": { "label": "Title" },
-          "organization": { "label": "Company" },
-          "url": { "label": "Link", "format": "link" },
-          "date_posted": { "label": "Posted", "format": "date" },
-          "cities_derived": { "label": "City" },
-          "countries_derived": { "label": "Country" },
-          "ai_work_arrangement": { "label": "Arrangement" },
-          "ai_employment_type": { "label": "Type" },
-          "ai_experience_level": { "label": "Experience" },
-          "ai_salary_min_value": { "label": "Salary min" },
-          "ai_salary_max_value": { "label": "Salary max" },
-          "ai_salary_currency": { "label": "Currency" },
-          "source": { "label": "Platform" }
+          "title": {
+            "label": "Title"
+          },
+          "organization": {
+            "label": "Company"
+          },
+          "url": {
+            "label": "Link",
+            "format": "link"
+          },
+          "date_posted": {
+            "label": "Posted",
+            "format": "date"
+          },
+          "cities_derived": {
+            "label": "City"
+          },
+          "countries_derived": {
+            "label": "Country"
+          },
+          "ai_work_arrangement": {
+            "label": "Arrangement"
+          },
+          "ai_employment_type": {
+            "label": "Type"
+          },
+          "ai_experience_level": {
+            "label": "Experience"
+          },
+          "ai_salary_min_value": {
+            "label": "Salary min"
+          },
+          "ai_salary_max_value": {
+            "label": "Salary max"
+          },
+          "ai_salary_currency": {
+            "label": "Currency"
+          },
+          "source": {
+            "label": "Platform"
+          }
         }
       }
     }

@@ -12,7 +12,8 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "start:prod": "node dist/main.js"
   },
   "dependencies": {
     "apify": "^3.2.6",
