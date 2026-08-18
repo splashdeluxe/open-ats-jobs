@@ -1,0 +1,742 @@
+{
+  "_comment": "Career-site boards verified live against each platform API on 2026-08-18. jobsAtVerification is what the board returned that day; it is a freshness marker, not a promise. Pass any of these to the Actor as \"platform:slug\" in the companies input. SmartRecruiters boards are deliberately absent: its robots.txt disallows all crawlers except LinkedInBot.",
+  "verifiedOn": "2026-08-18",
+  "boardCount": 179,
+  "jobsAtVerification": 18830,
+  "boards": {
+    "ashby": [
+      {
+        "slug": "openai",
+        "jobsAtVerification": 729
+      },
+      {
+        "slug": "harvey",
+        "jobsAtVerification": 391
+      },
+      {
+        "slug": "snowflake",
+        "jobsAtVerification": 383
+      },
+      {
+        "slug": "elevenlabs",
+        "jobsAtVerification": 255
+      },
+      {
+        "slug": "clickhouse",
+        "jobsAtVerification": 174
+      },
+      {
+        "slug": "deliveroo",
+        "jobsAtVerification": 167
+      },
+      {
+        "slug": "whoop",
+        "jobsAtVerification": 166
+      },
+      {
+        "slug": "cohere",
+        "jobsAtVerification": 144
+      },
+      {
+        "slug": "ramp",
+        "jobsAtVerification": 136
+      },
+      {
+        "slug": "notion",
+        "jobsAtVerification": 131
+      },
+      {
+        "slug": "pennylane",
+        "jobsAtVerification": 124
+      },
+      {
+        "slug": "cursor",
+        "jobsAtVerification": 115
+      },
+      {
+        "slug": "langchain",
+        "jobsAtVerification": 108
+      },
+      {
+        "slug": "plaid",
+        "jobsAtVerification": 102
+      },
+      {
+        "slug": "perplexity",
+        "jobsAtVerification": 101
+      },
+      {
+        "slug": "socure",
+        "jobsAtVerification": 100
+      },
+      {
+        "slug": "vanta",
+        "jobsAtVerification": 97
+      },
+      {
+        "slug": "alan",
+        "jobsAtVerification": 89
+      },
+      {
+        "slug": "mercor",
+        "jobsAtVerification": 86
+      },
+      {
+        "slug": "baseten",
+        "jobsAtVerification": 74
+      },
+      {
+        "slug": "synthesia",
+        "jobsAtVerification": 64
+      },
+      {
+        "slug": "fireworks",
+        "jobsAtVerification": 61
+      },
+      {
+        "slug": "drata",
+        "jobsAtVerification": 56
+      },
+      {
+        "slug": "temporal",
+        "jobsAtVerification": 54
+      },
+      {
+        "slug": "writer",
+        "jobsAtVerification": 54
+      },
+      {
+        "slug": "supabase",
+        "jobsAtVerification": 53
+      },
+      {
+        "slug": "benchling",
+        "jobsAtVerification": 50
+      },
+      {
+        "slug": "abridge",
+        "jobsAtVerification": 46
+      },
+      {
+        "slug": "miro",
+        "jobsAtVerification": 43
+      },
+      {
+        "slug": "sentry",
+        "jobsAtVerification": 42
+      },
+      {
+        "slug": "qonto",
+        "jobsAtVerification": 40
+      },
+      {
+        "slug": "render",
+        "jobsAtVerification": 35
+      },
+      {
+        "slug": "sardine",
+        "jobsAtVerification": 35
+      },
+      {
+        "slug": "linear",
+        "jobsAtVerification": 33
+      },
+      {
+        "slug": "amplitude",
+        "jobsAtVerification": 32
+      },
+      {
+        "slug": "gamma",
+        "jobsAtVerification": 32
+      },
+      {
+        "slug": "modal",
+        "jobsAtVerification": 31
+      },
+      {
+        "slug": "confluent",
+        "jobsAtVerification": 30
+      },
+      {
+        "slug": "hex",
+        "jobsAtVerification": 28
+      },
+      {
+        "slug": "iterable",
+        "jobsAtVerification": 27
+      },
+      {
+        "slug": "workos",
+        "jobsAtVerification": 26
+      },
+      {
+        "slug": "oyster",
+        "jobsAtVerification": 21
+      },
+      {
+        "slug": "persona",
+        "jobsAtVerification": 18
+      },
+      {
+        "slug": "andela",
+        "jobsAtVerification": 17
+      },
+      {
+        "slug": "anyscale",
+        "jobsAtVerification": 16
+      },
+      {
+        "slug": "llamaindex",
+        "jobsAtVerification": 15
+      },
+      {
+        "slug": "semgrep",
+        "jobsAtVerification": 15
+      },
+      {
+        "slug": "demandbase",
+        "jobsAtVerification": 14
+      },
+      {
+        "slug": "secureframe",
+        "jobsAtVerification": 14
+      },
+      {
+        "slug": "forto",
+        "jobsAtVerification": 13
+      },
+      {
+        "slug": "airbyte",
+        "jobsAtVerification": 12
+      },
+      {
+        "slug": "airops",
+        "jobsAtVerification": 12
+      },
+      {
+        "slug": "resend",
+        "jobsAtVerification": 11
+      },
+      {
+        "slug": "browserbase",
+        "jobsAtVerification": 8
+      },
+      {
+        "slug": "pinecone",
+        "jobsAtVerification": 8
+      },
+      {
+        "slug": "railway",
+        "jobsAtVerification": 8
+      },
+      {
+        "slug": "modernTreasury",
+        "jobsAtVerification": 7
+      },
+      {
+        "slug": "openevidence",
+        "jobsAtVerification": 7
+      },
+      {
+        "slug": "sweep",
+        "jobsAtVerification": 7
+      },
+      {
+        "slug": "neon",
+        "jobsAtVerification": 6
+      },
+      {
+        "slug": "materialize",
+        "jobsAtVerification": 5
+      },
+      {
+        "slug": "speakeasy",
+        "jobsAtVerification": 5
+      },
+      {
+        "slug": "stytch",
+        "jobsAtVerification": 5
+      },
+      {
+        "slug": "unit",
+        "jobsAtVerification": 5
+      },
+      {
+        "slug": "influxdata",
+        "jobsAtVerification": 4
+      },
+      {
+        "slug": "runway",
+        "jobsAtVerification": 4
+      },
+      {
+        "slug": "doppler",
+        "jobsAtVerification": 3
+      },
+      {
+        "slug": "knock",
+        "jobsAtVerification": 3
+      },
+      {
+        "slug": "hightouch",
+        "jobsAtVerification": 1
+      },
+      {
+        "slug": "orca",
+        "jobsAtVerification": 1
+      },
+      {
+        "slug": "readme",
+        "jobsAtVerification": 1
+      },
+      {
+        "slug": "weaviate",
+        "jobsAtVerification": 1
+      }
+    ],
+    "breezy": [
+      {
+        "slug": "breezy",
+        "jobsAtVerification": 3
+      }
+    ],
+    "greenhouse": [
+      {
+        "slug": "carvana",
+        "jobsAtVerification": 1708
+      },
+      {
+        "slug": "databricks",
+        "jobsAtVerification": 804
+      },
+      {
+        "slug": "stripe",
+        "jobsAtVerification": 573
+      },
+      {
+        "slug": "anthropic",
+        "jobsAtVerification": 461
+      },
+      {
+        "slug": "datadog",
+        "jobsAtVerification": 421
+      },
+      {
+        "slug": "mongodb",
+        "jobsAtVerification": 405
+      },
+      {
+        "slug": "okta",
+        "jobsAtVerification": 338
+      },
+      {
+        "slug": "brex",
+        "jobsAtVerification": 303
+      },
+      {
+        "slug": "cloudflare",
+        "jobsAtVerification": 298
+      },
+      {
+        "slug": "verkada",
+        "jobsAtVerification": 287
+      },
+      {
+        "slug": "samsara",
+        "jobsAtVerification": 271
+      },
+      {
+        "slug": "celonis",
+        "jobsAtVerification": 263
+      },
+      {
+        "slug": "elastic",
+        "jobsAtVerification": 251
+      },
+      {
+        "slug": "braze",
+        "jobsAtVerification": 245
+      },
+      {
+        "slug": "wolt",
+        "jobsAtVerification": 240
+      },
+      {
+        "slug": "fivetran",
+        "jobsAtVerification": 239
+      },
+      {
+        "slug": "gitlab",
+        "jobsAtVerification": 196
+      },
+      {
+        "slug": "affirm",
+        "jobsAtVerification": 192
+      },
+      {
+        "slug": "airbnb",
+        "jobsAtVerification": 192
+      },
+      {
+        "slug": "clickhouse",
+        "jobsAtVerification": 174
+      },
+      {
+        "slug": "coinbase",
+        "jobsAtVerification": 169
+      },
+      {
+        "slug": "lyft",
+        "jobsAtVerification": 168
+      },
+      {
+        "slug": "figma",
+        "jobsAtVerification": 164
+      },
+      {
+        "slug": "twilio",
+        "jobsAtVerification": 157
+      },
+      {
+        "slug": "flexport",
+        "jobsAtVerification": 156
+      },
+      {
+        "slug": "reddit",
+        "jobsAtVerification": 152
+      },
+      {
+        "slug": "klaviyo",
+        "jobsAtVerification": 148
+      },
+      {
+        "slug": "asana",
+        "jobsAtVerification": 129
+      },
+      {
+        "slug": "robinhood",
+        "jobsAtVerification": 123
+      },
+      {
+        "slug": "intercom",
+        "jobsAtVerification": 118
+      },
+      {
+        "slug": "instacart",
+        "jobsAtVerification": 112
+      },
+      {
+        "slug": "oura",
+        "jobsAtVerification": 109
+      },
+      {
+        "slug": "zoominfo",
+        "jobsAtVerification": 105
+      },
+      {
+        "slug": "gusto",
+        "jobsAtVerification": 87
+      },
+      {
+        "slug": "chainguard",
+        "jobsAtVerification": 86
+      },
+      {
+        "slug": "vercel",
+        "jobsAtVerification": 84
+      },
+      {
+        "slug": "n26",
+        "jobsAtVerification": 74
+      },
+      {
+        "slug": "hightouch",
+        "jobsAtVerification": 72
+      },
+      {
+        "slug": "duolingo",
+        "jobsAtVerification": 67
+      },
+      {
+        "slug": "faire",
+        "jobsAtVerification": 67
+      },
+      {
+        "slug": "tailscale",
+        "jobsAtVerification": 61
+      },
+      {
+        "slug": "mercury",
+        "jobsAtVerification": 58
+      },
+      {
+        "slug": "mixpanel",
+        "jobsAtVerification": 58
+      },
+      {
+        "slug": "chime",
+        "jobsAtVerification": 57
+      },
+      {
+        "slug": "peloton",
+        "jobsAtVerification": 51
+      },
+      {
+        "slug": "discord",
+        "jobsAtVerification": 50
+      },
+      {
+        "slug": "checkr",
+        "jobsAtVerification": 46
+      },
+      {
+        "slug": "marqeta",
+        "jobsAtVerification": 44
+      },
+      {
+        "slug": "attentive",
+        "jobsAtVerification": 39
+      },
+      {
+        "slug": "dropbox",
+        "jobsAtVerification": 37
+      },
+      {
+        "slug": "singlestore",
+        "jobsAtVerification": 36
+      },
+      {
+        "slug": "project44",
+        "jobsAtVerification": 33
+      },
+      {
+        "slug": "raisin",
+        "jobsAtVerification": 33
+      },
+      {
+        "slug": "amplitude",
+        "jobsAtVerification": 32
+      },
+      {
+        "slug": "webflow",
+        "jobsAtVerification": 30
+      },
+      {
+        "slug": "customerio",
+        "jobsAtVerification": 29
+      },
+      {
+        "slug": "cockroachlabs",
+        "jobsAtVerification": 27
+      },
+      {
+        "slug": "khanacademy",
+        "jobsAtVerification": 27
+      },
+      {
+        "slug": "iterable",
+        "jobsAtVerification": 26
+      },
+      {
+        "slug": "commercetools",
+        "jobsAtVerification": 23
+      },
+      {
+        "slug": "coursera",
+        "jobsAtVerification": 23
+      },
+      {
+        "slug": "turing",
+        "jobsAtVerification": 23
+      },
+      {
+        "slug": "alloy",
+        "jobsAtVerification": 22
+      },
+      {
+        "slug": "squarespace",
+        "jobsAtVerification": 20
+      },
+      {
+        "slug": "starburst",
+        "jobsAtVerification": 17
+      },
+      {
+        "slug": "airtable",
+        "jobsAtVerification": 16
+      },
+      {
+        "slug": "cognism",
+        "jobsAtVerification": 15
+      },
+      {
+        "slug": "fourkites",
+        "jobsAtVerification": 15
+      },
+      {
+        "slug": "udemy",
+        "jobsAtVerification": 14
+      },
+      {
+        "slug": "typeface",
+        "jobsAtVerification": 13
+      },
+      {
+        "slug": "planetscale",
+        "jobsAtVerification": 10
+      },
+      {
+        "slug": "contentful",
+        "jobsAtVerification": 9
+      },
+      {
+        "slug": "descope",
+        "jobsAtVerification": 8
+      },
+      {
+        "slug": "laika",
+        "jobsAtVerification": 5
+      },
+      {
+        "slug": "lithic",
+        "jobsAtVerification": 5
+      },
+      {
+        "slug": "masterclass",
+        "jobsAtVerification": 3
+      },
+      {
+        "slug": "knock",
+        "jobsAtVerification": 2
+      },
+      {
+        "slug": "netlify",
+        "jobsAtVerification": 2
+      },
+      {
+        "slug": "remote",
+        "jobsAtVerification": 2
+      },
+      {
+        "slug": "orca",
+        "jobsAtVerification": 1
+      }
+    ],
+    "lever": [
+      {
+        "slug": "ro",
+        "jobsAtVerification": 52
+      },
+      {
+        "slug": "qonto",
+        "jobsAtVerification": 40
+      },
+      {
+        "slug": "outreach",
+        "jobsAtVerification": 31
+      },
+      {
+        "slug": "porter",
+        "jobsAtVerification": 28
+      },
+      {
+        "slug": "swile",
+        "jobsAtVerification": 22
+      },
+      {
+        "slug": "toptal",
+        "jobsAtVerification": 21
+      },
+      {
+        "slug": "secureframe",
+        "jobsAtVerification": 15
+      },
+      {
+        "slug": "neon",
+        "jobsAtVerification": 13
+      },
+      {
+        "slug": "zilliz",
+        "jobsAtVerification": 12
+      },
+      {
+        "slug": "alloy",
+        "jobsAtVerification": 6
+      },
+      {
+        "slug": "brilliant",
+        "jobsAtVerification": 4
+      },
+      {
+        "slug": "anyscale",
+        "jobsAtVerification": 1
+      }
+    ],
+    "personio": [
+      {
+        "slug": "urbansportsclub",
+        "jobsAtVerification": 38
+      },
+      {
+        "slug": "cabify",
+        "jobsAtVerification": 3
+      },
+      {
+        "slug": "personio",
+        "jobsAtVerification": 1
+      }
+    ],
+    "recruitee": [
+      {
+        "slug": "nmbrs",
+        "jobsAtVerification": 3
+      },
+      {
+        "slug": "personio",
+        "jobsAtVerification": 1
+      }
+    ],
+    "workable": [
+      {
+        "slug": "viva",
+        "jobsAtVerification": 41
+      },
+      {
+        "slug": "blueground",
+        "jobsAtVerification": 27
+      },
+      {
+        "slug": "orfium",
+        "jobsAtVerification": 21
+      },
+      {
+        "slug": "upstream",
+        "jobsAtVerification": 15
+      },
+      {
+        "slug": "skroutz",
+        "jobsAtVerification": 9
+      },
+      {
+        "slug": "epignosis",
+        "jobsAtVerification": 4
+      },
+      {
+        "slug": "persado",
+        "jobsAtVerification": 3
+      }
+    ],
+    "workday": [
+      {
+        "slug": "nvidia:wd5:NVIDIAExternalCareerSite",
+        "jobsAtVerification": 2000
+      }
+    ],
+    "rippling": [
+      {
+        "slug": "rippling",
+        "jobsAtVerification": 375
+      }
+    ]
+  }
+}
