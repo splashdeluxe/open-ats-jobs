@@ -1,0 +1,13 @@
+{
+  "actorSpecification": 1,
+  "name": "open-ats-jobs",
+  "title": "Career Site Job Scraper",
+  "description": "Scrapes job listings straight from company career sites across many ATS platforms, normalised into one schema. Detects expired jobs for free.",
+  "version": "0.1",
+  "buildTag": "latest",
+  "dockerfile": "../Dockerfile",
+  "input": "./input_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  }
+}

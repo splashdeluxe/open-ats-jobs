@@ -1,0 +1,282 @@
+{
+  "title": "Career Site Job Scraper",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "companies": {
+      "title": "Companies",
+      "type": "array",
+      "description": "Boards as \"platform:slug\". Examples: greenhouse:gitlab, ashby:ramp, lever:matchgroup, workable:viva, personio:urbansportsclub, breezy:breezy, rippling:rippling. Workday needs tenant, pod and site: workday:nvidia:wd5:NVIDIAExternalCareerSite",
+      "editor": "stringList",
+      "prefill": [
+        "greenhouse:gitlab",
+        "ashby:ramp"
+      ]
+    },
+    "careerUrls": {
+      "title": "Career site URLs",
+      "type": "array",
+      "description": "Careers pages. The platform and board slug are detected from the URL, so you do not need to know which ATS a company uses.",
+      "editor": "stringList",
+      "prefill": [
+        "https://jobs.lever.co/matchgroup"
+      ]
+    },
+    "platforms": {
+      "title": "Restrict to platforms",
+      "type": "array",
+      "description": "Only crawl these platforms. Leave empty for all enabled ones.",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": [
+          "greenhouse",
+          "lever",
+          "ashby",
+          "workday",
+          "workable",
+          "rippling",
+          "personio",
+          "breezy",
+          "smartrecruiters"
+        ]
+      }
+    },
+    "timeRange": {
+      "title": "Time range",
+      "type": "string",
+      "description": "Only return jobs posted within this window. Combined with deduplication, a scheduled run emits only genuinely new jobs.",
+      "editor": "select",
+      "enum": [
+        "1h",
+        "24h",
+        "7d",
+        "30d",
+        "all"
+      ],
+      "enumTitles": [
+        "Last hour",
+        "Last 24 hours",
+        "Last 7 days",
+        "Last 30 days",
+        "All active jobs"
+      ],
+      "default": "7d"
+    },
+    "maxJobs": {
+      "title": "Maximum jobs per run",
+      "type": "integer",
+      "editor": "number",
+      "default": 1000,
+      "minimum": 1,
+      "maximum": 50000,
+      "description": "Hard cap on how many jobs this run pushes to the dataset, applied after filtering."
+    },
+    "includeDescription": {
+      "title": "Include job descriptions",
+      "type": "boolean",
+      "description": "Off is cheaper. Workday and Rippling need a second request per job for the description, so leaving this off avoids thousands of requests.",
+      "default": true
+    },
+    "descriptionType": {
+      "title": "Description format",
+      "type": "string",
+      "editor": "select",
+      "enum": [
+        "text",
+        "html",
+        "both"
+      ],
+      "default": "text",
+      "description": "Whether to emit the description as plain text, HTML, or both. Text is smaller and easier to search."
+    },
+    "includeContactInfo": {
+      "title": "Include recruiter contact details",
+      "type": "boolean",
+      "description": "Off by default. Postings sometimes name a recruiter, which is personal data under GDPR. When off, emails and phone numbers are redacted from descriptions.",
+      "default": false
+    },
+    "titleSearch": {
+      "title": "Title contains",
+      "type": "array",
+      "description": "Match job titles. Use a trailing :* for prefix matching, e.g. Engineer:*",
+      "editor": "stringList"
+    },
+    "titleExclusionSearch": {
+      "title": "Title excludes",
+      "type": "array",
+      "editor": "stringList",
+      "description": "Drop jobs whose title matches any of these. Use a trailing :* for prefix matching."
+    },
+    "locationSearch": {
+      "title": "Location contains",
+      "type": "array",
+      "editor": "stringList",
+      "description": "Keep only jobs whose location matches any of these. Matches raw and normalised location fields."
+    },
+    "locationExclusionSearch": {
+      "title": "Location excludes",
+      "type": "array",
+      "editor": "stringList",
+      "description": "Drop jobs whose location matches any of these."
+    },
+    "descriptionSearch": {
+      "title": "Description contains",
+      "type": "array",
+      "description": "Searches title and description together.",
+      "editor": "stringList"
+    },
+    "descriptionExclusionSearch": {
+      "title": "Description excludes",
+      "type": "array",
+      "editor": "stringList",
+      "description": "Drop jobs whose title or description matches any of these."
+    },
+    "organizationSearch": {
+      "title": "Organization contains",
+      "type": "array",
+      "editor": "stringList",
+      "description": "Keep only jobs from companies matching any of these names."
+    },
+    "organizationExclusionSearch": {
+      "title": "Organization excludes",
+      "type": "array",
+      "editor": "stringList",
+      "description": "Drop jobs from companies matching any of these names."
+    },
+    "countries": {
+      "title": "Countries",
+      "type": "array",
+      "description": "English country names, e.g. Germany, United States, United Kingdom.",
+      "editor": "stringList"
+    },
+    "employmentTypes": {
+      "title": "Employment type",
+      "type": "array",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": [
+          "FULL_TIME",
+          "PART_TIME",
+          "CONTRACTOR",
+          "TEMPORARY",
+          "INTERN",
+          "VOLUNTEER",
+          "PER_DIEM",
+          "OTHER"
+        ]
+      },
+      "description": "Keep only these employment types. Derived from the ATS payload, no model needed."
+    },
+    "workArrangements": {
+      "title": "Work arrangement",
+      "type": "array",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": [
+          "On-site",
+          "Hybrid",
+          "Remote OK",
+          "Remote Solely"
+        ]
+      },
+      "description": "Keep only these work arrangements. \"Remote OK\" means remote with an office available; \"Remote Solely\" means no office."
+    },
+    "experienceLevels": {
+      "title": "Experience level",
+      "type": "array",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": [
+          "0-2",
+          "2-5",
+          "5-10",
+          "10+"
+        ]
+      },
+      "description": "Keep only these experience brackets, derived from the job title and any stated years of experience."
+    },
+    "languages": {
+      "title": "Description language",
+      "type": "array",
+      "description": "English names, e.g. English, German, French.",
+      "editor": "stringList"
+    },
+    "hasSalary": {
+      "title": "Only jobs with salary",
+      "type": "boolean",
+      "default": false,
+      "description": "Keep only jobs where a salary figure could be extracted from the posting."
+    },
+    "visaSponsorship": {
+      "title": "Only jobs offering visa sponsorship",
+      "type": "boolean",
+      "default": false,
+      "description": "Keep only jobs that explicitly state visa sponsorship is available."
+    },
+    "datePostedAfter": {
+      "title": "Posted after",
+      "type": "string",
+      "description": "ISO date, e.g. 2026-01-01. Overrides the time range when set.",
+      "editor": "textfield"
+    },
+    "enrichWithAI": {
+      "title": "AI enrichment (needs your own API key)",
+      "type": "boolean",
+      "description": "Off by default. Salary, work arrangement, seniority, employment type and language are always extracted for free without a model. This adds key skills, responsibilities and a requirements summary.",
+      "default": false
+    },
+    "anthropicApiKey": {
+      "title": "Anthropic API key",
+      "type": "string",
+      "description": "Only needed when AI enrichment is on. Results are cached per description, so re-runs cost nothing.",
+      "editor": "textfield",
+      "isSecret": true
+    },
+    "enrichmentModel": {
+      "title": "Enrichment model",
+      "type": "string",
+      "editor": "textfield",
+      "default": "claude-haiku-4-5",
+      "description": "Anthropic model used for enrichment. Haiku is the cheapest that does this well."
+    },
+    "maxEnrichedJobs": {
+      "title": "Maximum jobs to enrich per run",
+      "type": "integer",
+      "editor": "number",
+      "default": 500,
+      "description": "Cap on how many new descriptions get sent to the model per run. Cached descriptions do not count."
+    },
+    "emitExpiredJobs": {
+      "title": "Detect expired jobs",
+      "type": "boolean",
+      "description": "Jobs that disappeared from a board since the last run are written to the \"expired-jobs\" dataset. Free, because every run reads the complete board.",
+      "default": true
+    },
+    "enableSmartRecruiters": {
+      "title": "Enable SmartRecruiters (read the note)",
+      "type": "boolean",
+      "description": "Disabled by default. api.smartrecruiters.com/robots.txt sets \"User-agent: * / Disallow: /\" and allows only LinkedInBot. Enable this only if you have a lawful basis to crawl it. The decision is recorded in the run log.",
+      "default": false
+    },
+    "concurrency": {
+      "title": "Concurrent requests",
+      "type": "integer",
+      "editor": "number",
+      "default": 5,
+      "minimum": 1,
+      "maximum": 20,
+      "description": "How many requests run at once across all boards. Per-host crawl delays are still honoured."
+    },
+    "proxyConfiguration": {
+      "title": "Proxy",
+      "type": "object",
+      "description": "Optional. The default platforms do not need a proxy.",
+      "editor": "proxy"
+    }
+  },
+  "required": []
+}
