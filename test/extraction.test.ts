@@ -224,3 +224,65 @@ describe('employment type', () => {
     expect(d(null, 'Account Executive - Italy', 'We sell software to enterprises.')).toBeNull();
   });
 });
+
+describe('work arrangement: Remote Solely requires evidence, not absent data', () => {
+  const job = (over: Partial<RawJob>): RawJob => ({
+    sourceId: 'x', title: 'Deal Desk Senior Analyst', organization: 'Twilio',
+    url: 'https://job-boards.greenhouse.io/twilio/jobs/1', locationsRaw: [],
+    source: 'greenhouse', sourceDomain: 'greenhouse.io', companySlug: 'twilio',
+    ...over,
+  });
+
+  // Real record from a live run. Greenhouse gives no structured workplace field,
+  // the location resolves to a country but no city, and the posting itself says
+  // the company gathers people in person.
+  const TWILIO = job({
+    locationsRaw: ['Remote - Colombia'],
+    descriptionText:
+      'Twilio is a remote-first company. Employees are expected to come together '
+      + 'in person on an ad-hoc basis for team gatherings, functional off-sites and '
+      + 'other company events.',
+  });
+
+  it('does not call a remote-first job with in-person gatherings "Remote Solely"', () => {
+    expect(deriveAll(TWILIO).ai_work_arrangement).toBe('Remote OK');
+  });
+});
+
+describe('work arrangement: the rest of the boundary', () => {
+  const job = (over: Partial<RawJob>): RawJob => ({
+    sourceId: 'x', title: 'Engineer', organization: 'Acme',
+    url: 'https://boards.greenhouse.io/acme/jobs/1', locationsRaw: [],
+    source: 'greenhouse', sourceDomain: 'greenhouse.io', companySlug: 'acme',
+    ...over,
+  });
+
+  it('still calls a genuinely office-less job "Remote Solely"', () => {
+    expect(deriveAll(job({
+      locationsRaw: ['Remote'],
+      descriptionText: 'We are a fully distributed team. Work from anywhere.',
+    })).ai_work_arrangement).toBe('Remote Solely');
+  });
+
+  it('treats a country-only remote location as Remote OK when nothing says otherwise', () => {
+    // The old code read "no city resolved" as "no office exists".
+    expect(deriveAll(job({
+      locationsRaw: ['Remote - Colombia'],
+      descriptionText: 'You will support our sales team across the region.',
+    })).ai_work_arrangement).toBe('Remote OK');
+  });
+
+  it('keeps hybrid ahead of remote when the posting says both', () => {
+    expect(deriveAll(job({
+      locationsRaw: ['Remote - Berlin'],
+      descriptionText: 'Hybrid role, 2 days a week in the office.',
+    })).ai_work_arrangement).toBe('Hybrid');
+  });
+
+  it('leaves non-remote jobs alone', () => {
+    expect(deriveAll(job({
+      locationsRaw: ['Berlin, Germany'],
+      descriptionText: 'You will join us at our Berlin office.',
+    })).ai_work_arrangement).toBe('On-site');
+  });
+});

@@ -140,7 +140,18 @@ export function deriveWorkArrangement(
   }
   if (saysRemote) {
     // "Remote OK" means remote with an office still available; "Remote Solely" means no office at all.
-    const solely = !hasPhysicalLocation || /\b(fully remote|100% remote|remote[- ]only|work from anywhere|no office)\b/.test(haystack);
+    //
+    // Solely requires the posting to *say* there is no office. It was previously
+    // inferred from `!hasPhysicalLocation`, which is a different fact entirely:
+    // that only means no city could be resolved from the location string. A job
+    // posted as "Remote - Colombia" resolves to a country and no city, and so got
+    // classified Solely even where the description said the company brings people
+    // together in person. Absent data is not evidence.
+    const NO_OFFICE = /\b(fully remote|100% remote|remote[- ]only|work from anywhere|fully distributed|no offices?|without an office)\b/;
+    // Any of these mean premises or an in-person expectation exist, which rules Solely out.
+    const HAS_PREMISES = /\b(in[- ]person|on[- ]site|onsite|our offices?|the office|off[- ]sites?|team gatherings|company events|headquarters)\b/;
+
+    const solely = NO_OFFICE.test(haystack) && !HAS_PREMISES.test(haystack);
     return { arrangement: solely ? 'Remote Solely' : 'Remote OK', officeDays: null, locationType: 'TELECOMMUTE' };
   }
   if (saysOnsite || hasPhysicalLocation) {
