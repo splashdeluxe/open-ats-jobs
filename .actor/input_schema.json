@@ -276,6 +276,19 @@
       "type": "object",
       "description": "Optional. The default platforms do not need a proxy.",
       "editor": "proxy"
+    },
+    "stateStoreName": {
+      "title": "State store name",
+      "type": "string",
+      "description": "Named key-value store holding seen jobs, board ETags and the enrichment cache. This is what makes incremental runs, expired-job detection and caching work across runs. Use a different name per feed so separate schedules do not share a seen-list.",
+      "editor": "textfield",
+      "default": "open-ats-jobs-state"
+    },
+    "resetState": {
+      "title": "Reset state (return everything matching)",
+      "type": "boolean",
+      "description": "Ignore and clear stored state for this run. Use when you want every job matching your filters rather than only jobs not returned before. Leave off for scheduled runs.",
+      "default": false
     }
   },
   "required": []

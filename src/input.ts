@@ -49,6 +49,18 @@ export const inputSchema = z.object({
   stateRetentionDays: z.number().int().min(1).max(365).optional().default(90),
 
   /**
+   * Named key-value store holding seen-job hashes, board ETags and the
+   * enrichment cache. It has to be named: the run's default store is recreated
+   * every run, so an unnamed store makes incremental delivery, expiry detection
+   * and caching quietly do nothing on the platform.
+   *
+   * Give separate feeds separate names so they do not share a seen-list.
+   */
+  stateStoreName: z.string().min(1).max(63).optional().default('open-ats-jobs-state'),
+  /** Ignore and clear stored state for this run: return everything matching, not just what is unseen. */
+  resetState: z.boolean().optional().default(false),
+
+  /**
    * SmartRecruiters' robots.txt disallows all crawlers except LinkedInBot.
    * Enabling it is an explicit decision, recorded in the run log.
    */

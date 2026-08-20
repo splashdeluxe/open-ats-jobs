@@ -31,10 +31,30 @@ export function boardHash(body: string): string {
   return createHash('sha256').update(body).digest('hex').slice(0, 32);
 }
 
-export async function loadState(): Promise<RunState> {
-  const store = await Actor.openKeyValueStore();
+/**
+ * State lives in a *named* key-value store, and the name is load-bearing.
+ *
+ * Calling Actor.openKeyValueStore() with no name opens the run's own default
+ * store, which Apify creates fresh for every run. Anything written there is
+ * gone by the next one, which silently disables incremental delivery, expiry
+ * detection and ETag skipping on the platform while still appearing to work
+ * locally, where that same default store is a folder that persists on disk.
+ */
+export async function loadState(storeName: string, reset = false): Promise<RunState> {
+  if (reset) {
+    log.info('resetState is on: ignoring stored state and starting cold.');
+    return { ...EMPTY };
+  }
+  const store = await Actor.openKeyValueStore(storeName);
   const raw = await store.getValue<RunState>(STATE_KEY);
-  if (!raw || typeof raw !== 'object') return { ...EMPTY };
+  if (!raw || typeof raw !== 'object') {
+    log.info(`No prior state in "${storeName}" — first run against this store.`);
+    return { ...EMPTY };
+  }
+  log.info(
+    `Loaded state from "${storeName}": ${Object.keys(raw.seen ?? {}).length} known job(s), `
+    + `${Object.keys(raw.etags ?? {}).length} cached board(s).`,
+  );
   return {
     lastRunAt: raw.lastRunAt ?? null,
     seen: raw.seen ?? {},
@@ -42,10 +62,13 @@ export async function loadState(): Promise<RunState> {
   };
 }
 
-export async function saveState(state: RunState): Promise<void> {
-  const store = await Actor.openKeyValueStore();
+export async function saveState(state: RunState, storeName: string): Promise<void> {
+  const store = await Actor.openKeyValueStore(storeName);
   await store.setValue(STATE_KEY, state);
-  log.info(`State saved: ${Object.keys(state.seen).length} known jobs, ${Object.keys(state.etags).length} cached boards.`);
+  log.info(
+    `State saved to "${storeName}": ${Object.keys(state.seen).length} known jobs, `
+    + `${Object.keys(state.etags).length} cached boards.`,
+  );
 }
 
 /**

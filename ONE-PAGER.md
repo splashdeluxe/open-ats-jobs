@@ -46,7 +46,7 @@ Almost everything you get is read straight out of the recruitment system's own d
 
 The rest is avoiding pointless work. If a company has posted nothing since the last check, the tool notices and does not download their page at all, which on an hourly schedule skips most of the work. Job descriptions are only fetched for postings that survive your filters, so a narrow search stays cheap even against an employer with seven hundred openings.
 
-The AI layer, when on, only reads genuinely new jobs and remembers what it has already read. It never pays twice for the same advert.
+The AI layer, when on, only reads genuinely new jobs and remembers what it has already read, so it does not pay twice for the same advert.
 
 ## The numbers
 

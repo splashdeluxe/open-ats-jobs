@@ -16,15 +16,18 @@ export function descriptionHash(text: string): string {
   return createHash('sha256').update(text.trim()).digest('hex').slice(0, 32);
 }
 
-export async function loadCache(): Promise<EnrichmentCache> {
-  const store = await Actor.openKeyValueStore();
+export async function loadCache(storeName: string): Promise<EnrichmentCache> {
+  // Named store, for the same reason as the run state: the default store is
+  // recreated per run on the platform, so an unnamed cache silently re-pays
+  // the model for every description on every run.
+  const store = await Actor.openKeyValueStore(storeName);
   return (await store.getValue<EnrichmentCache>(CACHE_KEY)) ?? {};
 }
 
-export async function saveCache(cache: EnrichmentCache): Promise<void> {
-  const store = await Actor.openKeyValueStore();
+export async function saveCache(cache: EnrichmentCache, storeName: string): Promise<void> {
+  const store = await Actor.openKeyValueStore(storeName);
   await store.setValue(CACHE_KEY, cache);
-  log.info(`Enrichment cache: ${Object.keys(cache).length} descriptions stored.`);
+  log.info(`Enrichment cache in "${storeName}": ${Object.keys(cache).length} descriptions stored.`);
 }
 
 /** Keep the cache from growing without bound across scheduled runs. */

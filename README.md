@@ -125,13 +125,17 @@ Unchanged boards are skipped. An ETag (or a content hash, when the platform send
 
 Enrichment results are cached on a hash of the description text, so a repost or a re-seen job never costs twice.
 
+All of that depends on `stateStoreName`, which must be a **named** key-value store. Apify recreates a run's default store on every run, so state kept there vanishes between runs and incremental delivery, expiry detection and caching all silently stop working while still appearing fine in local testing. The default name is `open-ats-jobs-state`; give separate feeds separate names so they do not share a seen-list. Two runs sharing a name concurrently will race on the state object, last write winning — fine on a schedule, wrong for parallel fan-out.
+
+Set `resetState: true` when you want every job matching your filters rather than only the ones not returned before.
+
 Requests ask for gzip, the default memory is 256 MB, and no proxy is used unless you configure one. None of the default platforms need one.
 
 ## Incremental runs and expiry
 
 State lives in the Actor's key-value store: which job URLs have been seen, when each was first seen, and the current ETag per board.
 
-`timeRange` filters on `date_posted` and also suppresses anything already seen, so a scheduled run emits only genuinely new jobs. Verified behaviour on two consecutive runs against the same boards: 139 jobs on the first, 0 on the second, with both boards skipped without downloading.
+`timeRange` filters on `date_posted` and also suppresses anything already seen, so a scheduled run emits only genuinely new jobs. Verified on the Apify platform across two consecutive runs against the same boards: N jobs on the first, 0 on the second, with both boards skipped without downloading. Verify this on the platform rather than locally — the local default store persists on disk and will hide a state bug that breaks every scheduled run.
 
 Job hashes present last run and missing this run are written to a separate `expired-jobs` dataset. Expiry is scoped to boards actually crawled in that run, so a company skipped because of a rate limit or a transient error does not get its entire board declared dead.
 

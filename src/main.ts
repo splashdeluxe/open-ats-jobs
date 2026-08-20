@@ -179,7 +179,7 @@ try {
     maxRetries: input.maxRetries,
   });
 
-  const state = await loadState();
+  const state = await loadState(input.stateStoreName, input.resetState);
   const now = new Date();
   const runIso = now.toISOString();
 
@@ -265,7 +265,7 @@ try {
   log.info(`${freshJobs.length} new job(s); ${shortlist.length} shortlisted; ${candidates.length} passed all filters. Skipped ${alreadySeen} already-seen, ${skippedUnchanged} unchanged board(s).`);
 
   let enrichments = new Map<string, Enrichment>();
-  const cache = input.enrichWithAI ? await loadCache() : {};
+  const cache = input.enrichWithAI ? await loadCache(input.stateStoreName) : {};
 
   if (input.enrichWithAI) {
     const apiKey = input.anthropicApiKey ?? process.env.ANTHROPIC_API_KEY;
@@ -314,8 +314,8 @@ try {
   if (pruned) log.info(`Pruned ${pruned} state entries older than ${input.stateRetentionDays} days.`);
 
   state.lastRunAt = runIso;
-  await saveState(state);
-  if (input.enrichWithAI) await saveCache(trimCache(cache, 50_000));
+  await saveState(state, input.stateStoreName);
+  if (input.enrichWithAI) await saveCache(trimCache(cache, 50_000), input.stateStoreName);
 
   log.info(`Done. ${batch.length} job(s) pushed to the default dataset.`);
 } catch (err) {
