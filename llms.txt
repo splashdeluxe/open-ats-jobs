@@ -1,0 +1,22 @@
+# open-ats-jobs (ATS Job Scraper)
+
+> Reads job adverts straight from company career pages and returns them as one consistent set of fields, whichever recruitment system (ATS) the company uses. It never touches an aggregator: one row per role, and the apply URL points at the company's actual application form. Runs as an Apify Actor, or as a plain Node script.
+
+## What it does
+
+- Reads the same machine-readable feeds that populate company careers pages, across 10 ATS platforms: Greenhouse, Ashby, Lever, Workable, Personio, Recruitee, Breezy HR, Rippling, Workday and SmartRecruiters (disabled by default).
+- Normalises ten different shapes into one schema. Locations come back as structured city, region and country; pay is extracted wherever the employer published it.
+- Expiry detection: every run reads a company's complete board, so postings that disappeared since last time are written to a separate expired-jobs dataset.
+- Ships with seeds/companies.json: 179 company boards verified working on 2026-08-18, holding 18,830 jobs between them.
+
+## Quick start
+
+- npm install, then npm run build
+- Create storage/key_value_stores/default/INPUT.json with companies (for example "greenhouse:gitlab"), timeRange, maxJobs and includeDescription
+- Full detail in the README; a plain-language version is in ONE-PAGER.md
+
+## Links
+
+- Repository: https://github.com/splashdeluxe/open-ats-jobs
+- One-pager: https://github.com/splashdeluxe/open-ats-jobs/blob/main/ONE-PAGER.md
+- Author: Nils Effmert, https://perfectlivingspot.com
