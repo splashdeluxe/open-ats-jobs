@@ -10,6 +10,18 @@ Runs as an [Apify](https://apify.com) Actor, or as a plain Node script.
 
 The docs are also available as [llms.txt](llms.txt) for coding agents.
 
+## Watch how it works
+
+One run takes about 25 seconds to watch, with the boards the README verified live.
+
+<table>
+  <tr>
+    <td align="center" width="33%"><a href="https://github.com/splashdeluxe/open-ats-jobs/blob/main/assets/demo.gif"><img src="assets/posters/run-config.jpg" alt="Demo poster, configure: three company boards as input"></a><br><code>configure</code>: three boards in</td>
+    <td align="center" width="33%"><a href="https://github.com/splashdeluxe/open-ats-jobs/blob/main/assets/demo.gif"><img src="assets/posters/run-boards.jpg" alt="Demo poster, read the boards: 411 postings from three platforms"></a><br><code>read the boards</code>: one schema out</td>
+    <td align="center" width="33%"><a href="https://github.com/splashdeluxe/open-ats-jobs/blob/main/assets/demo.gif"><img src="assets/posters/run-expired.jpg" alt="Demo poster, spot the expired: postings that disappeared since last run"></a><br><code>spot the expired</code>: what closed</td>
+  </tr>
+</table>
+
 ## What makes the data different
 
 Job aggregators carry the same role three times: once from the employer, once from an agency, once from a recruiter who is not hiring at all. Half the links are dead by the time you read them. That is not a scraping problem, it is what a site where anyone can post anything looks like.
