@@ -8,6 +8,8 @@ If you are not a developer, read [ONE-PAGER.md](ONE-PAGER.md) instead. It covers
 
 Runs as an [Apify](https://apify.com) Actor, or as a plain Node script.
 
+The docs are also available as [llms.txt](llms.txt) for coding agents.
+
 ## What makes the data different
 
 Job aggregators carry the same role three times: once from the employer, once from an agency, once from a recruiter who is not hiring at all. Half the links are dead by the time you read them. That is not a scraping problem, it is what a site where anyone can post anything looks like.
